@@ -1,0 +1,82 @@
+---
+# tasks file for add_check_login_monitoring redhat
+ - name: Ensure the plugins of client.
+   copy: >
+     src="{{plugins_files_path}}"
+     dest="{{plugins_files_dest_path}}"
+     owner=root
+     group=root
+     directory_mode=yes
+     mode=755
+   notify: restart the nrpe service on redhat
+   when: ansible_os_family == "RedHat"
+
+ - name: Change the nrpe.cfg of client.
+   copy: >
+     src="{{nrpe_files_path}}"
+     dest="{{nrpe_files_dest_path}}"
+     owner=root
+     group=root
+     mode=644
+   notify: restart the nrpe service on redhat
+   when: ansible_os_family == "RedHat"
+
+ - name: Ensure the permissons of nrpe on clients.
+   copy: >
+     src="{{nrpe_sudoers_files_path}}"
+     dest="{{nrpe_sudoers_files_dest_path}}"
+     owner=root
+     group=root
+     mode=440
+   notify: restart the nrpe service on redhat
+   when: ansible_os_family == "RedHat"
+
+# tasks file for add_check_login_monitoring ubuntu
+ - name: Ensure the plugins of client.
+   copy: >
+     src="{{plugins_files_path_ubuntu}}"
+     dest="{{plugins_files_dest_path_ubuntu}}"
+     owner=root
+     group=root
+     directory_mode=yes
+     mode=0755
+   notify: restart the nrpe service on ubuntu
+   when: ansible_os_family == "Debian"
+
+ - name: Change the nrpe.cfg of client.
+   copy: >
+     src="{{nrpe_files_path_ubuntu}}"
+     dest="{{nrpe_files_dest_path_ubuntu}}"
+     owner=root
+     group=root
+     mode=644
+   notify: restart the nrpe service on ubuntu
+   when: ansible_os_family == "Debian"
+
+ - name: Ensure the permissons of nrpe on clients.
+   copy: >
+     src="{{nrpe_sudoers_files_path_ubuntu}}"
+     dest="{{nrpe_sudoers_files_dest_path_ubuntu}}"
+     owner=root
+     group=root
+     mode=440
+   notify: restart the nrpe service on ubuntu
+   when: ansible_os_family == "Debian"
+
+ - name: Change the shell of user nagios on ubuntu
+   user: name=nagios shell=/bin/bash
+   when: ansible_os_family == "Debian"
+
+ - name: Change the shell of user nrpe on redhat
+   user: name=nrpe shell=/bin/bash
+   when: ansible_os_family == "RedHat"
+
+ - name: Run the script monitoring on redhat
+   shell: /usr/lib64/nagios/plugins/check_login.sh
+   ignore_errors: yes
+   when: ansible_os_family == "RedHat"
+ 
+ - name: Run the script monitoring on ubuntu
+   shell: /usr/lib/nagios/plugins/check_login.sh
+   ignore_errors: yes
+   when: ansible_os_family == "Debian"

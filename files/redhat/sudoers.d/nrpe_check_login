@@ -1,0 +1,2 @@
+Defaults:nrpe   !requiretty
+nrpe    ALL=NOPASSWD:   /usr/lib64/nagios/plugins/check_login.sh

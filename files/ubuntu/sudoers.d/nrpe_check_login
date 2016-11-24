@@ -1,0 +1,2 @@
+Defaults:nagios   !requiretty
+nagios    ALL=NOPASSWD:   /usr/lib/nagios/plugins/check_login.sh
