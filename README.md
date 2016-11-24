@@ -1,4 +1,4 @@
-Role Name
+add_check_login_monitoring
 =========
 
 A brief description of the role goes here.
@@ -34,5 +34,4 @@ BSD
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Kevin Zhou
