@@ -1,0 +1,2 @@
+# add_check_login_monitoring
+用于添加监测用户登录的nrpe客户端配置。
